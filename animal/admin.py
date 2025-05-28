@@ -4,6 +4,9 @@ from animal.models import Animal
 
 # Register your models here.
 class AnimalAdmin(admin.ModelAdmin):
-    list_display = ('animal_nome',)
+    prepopulated_fields={
+        'slug':('animal_nome',)
+    }
+    list_display = ('animal_nome','slug',)
 
 admin.site.register(Animal, AnimalAdmin)

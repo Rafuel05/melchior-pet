@@ -1,0 +1,39 @@
+.pet-details {
+    padding: 10px 0;
+}
+
+.pet-meta {
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.pet-description {
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.btn-adotar {
+    width: 100%;
+    background-color: #8e44ad;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-adotar:hover {
+    background-color: #733a8b;
+}
