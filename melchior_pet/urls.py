@@ -24,6 +24,8 @@ from melchior_pet import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.visualizar_home, name= 'home' ),
-    path('pet/', include('pet.urls')),
+    path('users/', include('users.urls', namespace='users')), 
+    path('', include('pet.urls', namespace='pet')), 
+    
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
