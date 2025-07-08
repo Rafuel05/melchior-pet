@@ -103,22 +103,30 @@
         </header><!-- sect-heading -->
 
         <div class="row">
-            {% for pets in pets %}
-            <div class="col-md-3">
-                <div class="card card-product-grid">
+            {% for pet in pets_list %}
+            <div class="col-md-4">
+                <div class="card">
                     <div class="img-wrap"> 
-                        <img src="{{ pets.imagens.url }}"> 
+                        <img src="{{ pet.imagens.url }}">  <!-- Mudado de pets para pet -->
                     </div>
                     <figcaption class="info-wrap">
-                        <h5 class="title">{{ pets.pet_nome }}</h5>
+                        <h5 class="title">{{ pet.pet_nome }}</h5>  <!-- Mudado de pets para pet -->
                         <div class="pet-details">
-                            <p class="pet-meta">{{ pets.tamanho }} | {{ pets.genero }} | {{ pets.idade }} ano(s)</p>
-                            <p class="pet-description">{{ pets.descricao }}</p>
+                            <p class="pet-meta">{{ pet.tamanho }} | {{ pet.genero }} | {{ pet.idade }} ano(s)</p>  <!-- Mudado de pets para pet -->
+                            <p class="pet-description">{{ pet.descricao }}</p>  <!-- Mudado de pets para pet -->
                             <div class="btn-container">
-        						<button class="btn-adotar">Quero Adotar</button>
-    						</div>
+                                {% if user.is_authenticated and pet.usuario != user %}
+                                    <a href="{% url 'pet:solicitar_adocao' pet.id %}" class="btn btn-primary">Quero Adotar</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </figcaption>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    Nenhum pet disponível para adoção no momento.
                 </div>
             </div>
             {% endfor %}

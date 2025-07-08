@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Gerenciar Pedidos de Adoção</h2>
+    
+    {% if not pets %}
+    <div class="alert alert-info">
+        Você não tem pedidos de adoção pendentes para seus pets.
+    </div>
+    {% endif %}
+    
+    {% for pet in pets %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>{{ pet.pet_nome }}</h3>
+        </div>
+        <div class="card-body">
+            {% for pedido in pet.pedidos_adocao.all %}
+            {% if not pedido.processado %}
+            <div class="border-bottom mb-3 pb-3">
+                <h5>Pedido de {{ pedido.nome }}</h5>
+                <p>
+                    <strong>Email:</strong> {{ pedido.email }}<br>
+                    <strong>Telefone:</strong> {{ pedido.telefone }}<br>
+                    <strong>Endereço:</strong> {{ pedido.endereco }}<br>
+                    <strong>Data do pedido:</strong> {{ pedido.data_pedido|date:"d/m/Y H:i" }}
+                </p>
+                <form method="post" action="{% url 'pet:processar_pedido' pedido.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" name="acao" value="aceitar" class="btn btn-success">Aceitar</button>
+                    <button type="submit" name="acao" value="rejeitar" class="btn btn-danger">Rejeitar</button>
+                </form>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -4,10 +4,9 @@ from pet.models import Pet
 
 
 def visualizar_home(request):
-    pets = Pet.objects.all().filter(foi_adotado=False)
-
-    context={
-    'pets':pets
+    pets_list = Pet.objects.filter(foi_adotado=False)
+    context = {
+        'pets_list': pets_list  
     }
 
     return render(request, 'home.html',context)

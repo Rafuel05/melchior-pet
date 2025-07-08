@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Solicitar Adoção - {{ pet.pet_nome }}</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                {% if pet.imagens %}
+                <img src="{{ pet.imagens.url }}" class="card-img-top" alt="{{ pet.pet_nome }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ pet.pet_nome }}</h5>
+                    <p class="card-text">
+                        <strong>Raça:</strong> {{ pet.raca }}<br>
+                        <strong>Idade:</strong> {{ pet.idade }} ano(s)<br>
+                        <strong>Tamanho:</strong> {{ pet.tamanho }}
+                    </p>
+                    <p class="card-text">{{ pet.descricao }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Enviar Pedido de Adoção</button>
+                <a href="{% url 'pet:home' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
