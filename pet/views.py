@@ -108,3 +108,17 @@ def processar_pedido(request, pedido_id):
         return redirect('pet:gerenciar_pedidos')
     
     return redirect('pet:gerenciar_pedidos')
+
+
+@login_required
+def meus_pets(request):
+    # Pets que o usuário colocou para adoção (criados por ele e ainda não adotados)
+    pets_para_adocao = Pet.objects.filter(usuario=request.user, foi_adotado=False)
+    
+    # Pets que o usuário adotou (criados por outros e marcados como adotados)
+    pets_adotados = Pet.objects.filter(usuario=request.user, foi_adotado=True)
+    
+    return render(request, 'pet/meus_pets.html', {
+        'pets_para_adocao': pets_para_adocao,
+        'pets_adotados': pets_adotados
+    })

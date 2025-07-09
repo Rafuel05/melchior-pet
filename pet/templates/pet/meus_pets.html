@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Meus Pets</h1>
+
+    {% if messages %}
+    <div class="messages mb-4">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3>Pets que coloquei para adoção</h3>
+                </div>
+                <div class="card-body">
+                    {% if pets_para_adocao %}
+                    <div class="row">
+                        {% for pet in pets_para_adocao %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-img-top">
+                                    {% if pet.imagens %}
+                                    <img src="{{ pet.imagens.url }}" class="img-fluid" alt="{{ pet.pet_nome }}">
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ pet.pet_nome }}</h5>
+                                    <p class="card-text">
+                                        <strong>Tipo:</strong> {{ pet.animal }}<br>
+                                        <strong>Raça:</strong> {{ pet.raca }}<br>
+                                        <strong>Idade:</strong> {{ pet.idade }} ano(s)<br>
+                                        <strong>Tamanho:</strong> {{ pet.tamanho }}
+                                    </p>
+                                    <p class="card-text">{{ pet.descricao|truncatewords:20 }}</p>
+                                    <a href="{% url 'pet:gerenciar_pedidos' %}" class="btn btn-info">Ver pedidos de adoção</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    Status: Disponível para adoção
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        Você ainda não colocou nenhum pet para adoção.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3>Pets que adotei</h3>
+                </div>
+                <div class="card-body">
+                    {% if pets_adotados %}
+                    <div class="row">
+                        {% for pet in pets_adotados %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-img-top">
+                                    {% if pet.imagens %}
+                                    <img src="{{ pet.imagens.url }}" class="img-fluid" alt="{{ pet.pet_nome }}">
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ pet.pet_nome }}</h5>
+                                    <p class="card-text">
+                                        <strong>Tipo:</strong> {{ pet.animal }}<br>
+                                        <strong>Raça:</strong> {{ pet.raca }}<br>
+                                        <strong>Idade:</strong> {{ pet.idade }} ano(s)<br>
+                                        <strong>Tamanho:</strong> {{ pet.tamanho }}
+                                    </p>
+                                    <p class="card-text">{{ pet.descricao|truncatewords:20 }}</p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    Status: Adotado por você
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        Você ainda não adotou nenhum pet.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
